@@ -1,5 +1,5 @@
 name: Lint
-
+# run this workflow while pushing in all branches
 on: push
 
 jobs:
