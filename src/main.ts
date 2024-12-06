@@ -1,8 +1,12 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { MessagesModule } from './messages/messages.module';
+import { ValidationPipe } from '@nestjs/common';
+import { handleJson } from './utils/handleJson.util';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  await handleJson.handleStorageExist();
+  const app = await NestFactory.create(MessagesModule);
+  app.useGlobalPipes(new ValidationPipe());
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
