@@ -2,7 +2,7 @@ import * as path from 'path';
 import { promises as fs } from 'fs';
 
 class HandleJson {
-  private readonly dirPath = path.resolve(__dirname, '../');
+  private readonly dirPath = path.resolve(__dirname, '../.');
   private readonly filePath = path.join(this.dirPath, '/messages.json');
 
   async checkPath(path) {
@@ -20,6 +20,7 @@ class HandleJson {
       await fs.mkdir(this.dirPath);
     }
     const doesFileExist = await this.checkPath(this.filePath);
+    console.log(this.filePath);
     if (!doesFileExist) {
       await fs.writeFile(this.filePath, JSON.stringify([]));
     }
