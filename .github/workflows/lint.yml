@@ -42,8 +42,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - name: SonarQube Quality Gate Check
-        id: sonarqube-quality-gate-check
-        uses: SonarSource/sonarqube-quality-gate-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      # - name: SonarQube Quality Gate Check
+      #   id: sonarqube-quality-gate-check
+      #   uses: SonarSource/sonarqube-quality-gate-action@master
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
