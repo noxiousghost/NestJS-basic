@@ -1,25 +1,41 @@
 name: Lint
 # run this workflow while pushing in all branches
 on: push
-
 jobs:
   run-linters:
     name: Run linters
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18.18.2
           cache: yarn
           cache-dependency-path: './yarn.lock'
-
       - name: Install dependencies
         run: yarn install
-
       - name: Run linters
         run: yarn lint && yarn format
+    
+  sonarcloud:
+  name: sonarCloud
+  runs-on: ubuntu-latest
+      steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+          with: 
+            fetch-depth:0
+      - name: SonarCloud Scan
+        uses:  SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: SonarQube Quality Gate check
+        id: sonarqube-quality-gate-check
+        uses: sonarsource/sonarqube-quality-gate-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} # OPTIONAL
