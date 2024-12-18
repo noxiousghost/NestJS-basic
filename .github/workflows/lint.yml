@@ -3,8 +3,8 @@ name: Lint and SonarCloud Scan
 on:
   push:
     branches:
-      - '**' # Run on all branches
-  pull_request: # Optional: Run on PRs as well
+      - '**'
+  pull_request: 
 
 jobs:
   run-linters:
@@ -40,11 +40,11 @@ jobs:
       - name: SonarCloud Scan
         uses: sonarsource/sonarqube-scan-action@v4.1.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      # - name: SonarQube Quality Gate Check
-      #   id: sonarqube-quality-gate-check
-      #   uses: SonarSource/sonarqube-quality-gate-action@master
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: SonarQube Quality Gate Check
+        id: sonarqube-quality-gate-check
+        uses: SonarSource/sonarqube-quality-gate-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
